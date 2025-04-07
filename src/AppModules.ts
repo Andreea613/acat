@@ -6,6 +6,7 @@ import { DFASimulation } from './modules/automata/finite-automata/DFASimulation.
 import { Theme } from './modules/theme/theme.ts';
 import { OptimizingInaccessibleStatesSimulation } from './modules/automata/finite-automata/dfa/InaccessibleStates/OptimizingInaccessibleStatesSimulation.ts'; // Importăm noua simulare
 import { SystemInteraction } from './modules/system-interaction/SystemInteraction.ts';
+import { Localization } from './modules/localization/views/Localization.ts';
 
 /**
  * Constant that hold the names of the modules
@@ -19,12 +20,14 @@ export const ModuleNames = {
     Theme: 'theme-button',
     OptimizingInaccessibleStatesSimulation: 'optimized-inaccessible-dfa',
     SystemInteraction: 'system-interaction',
+    Localization: 'localization',
 } as const;
 
 /**
  * Holds the list of all the modules this application loads
  */
 export const AppModules = {
+    [ModuleNames.Localization]: Localization,
     [ModuleNames.HamburgerMenu]: HamburgerMenu,
     [ModuleNames.AppLogo]: AppLogo,
     [ModuleNames.AppMenu]: AppMenu,

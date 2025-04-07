@@ -5,11 +5,13 @@ import { Application } from '../../../types/Application.ts';
 import { MenuGroup } from './views/MenuGroup.ts';
 import { MenuItem } from './views/MenuItem.ts';
 import { MenuBar } from './views/MenuBar.ts';
+import { LocalizationListener } from '../../localization/views/LocalizationListener.ts';
+import { ModuleNames } from '../../../AppModules.ts';
 
 /**
  * Module that handles rendering the application menu
  */
-export class AppMenu implements Module {
+export class AppMenu implements Module,LocalizationListener {
     // references the application
     protected app: Application | null = null;
 
@@ -22,7 +24,15 @@ export class AppMenu implements Module {
     initialize(app: Application) {
         this.app = app;
 
+        // subcribing to language change
+        this.app.getModule(ModuleNames.Localization)?.subcribe(this);
+
         // building the app menu bar
+      this.createMenuBar();
+
+    }
+   
+    createMenuBar() {
         const menuBar = new MenuBar();
 
         // adding the menu groups
@@ -30,19 +40,23 @@ export class AppMenu implements Module {
         menuBar.addGroup(this.getEditMenuGroup());
         menuBar.addGroup(this.getHelpMenuGroup());
 
-        this.app.getLayout().appMenu.appendChild(menuBar);
-    }
 
+        const appMenu = this.app!.getLayout().appMenu;
+        appMenu.innerHTML = '';
+        appMenu.appendChild(menuBar);
+    }
     /**
      * Returns the list of items for the file menu group
      */
     getFileMenuGroup(): MenuGroup {
+        const localization = this.app!.getModule(ModuleNames.Localization)!;
+
         if (!this.menuGroups.has('file-menu')) {
-            const saveItem = new MenuItem({ displayName: 'Save', onclick: () => {if (this.app) {this.app.saveSimulation();}}, disabled: true});
-            const loadItem = new MenuItem({ displayName: 'Load', onclick: () => console.log('File -> Load pressed') });
+            const saveItem = new MenuItem({ displayName: localization.translate('Save'), onclick: () => {if (this.app) {this.app.saveSimulation();}}, disabled: true});
+            const loadItem = new MenuItem({ displayName: localization.translate('Load'), onclick: () => console.log('File -> Load pressed') });
             const exportItem = new MenuItem({ displayName: 'Export', onclick: () => console.log('File -> Export pressed') });
 
-            this.menuGroups.set('file-menu', new MenuGroup({ displayName: 'File', children: [saveItem, loadItem, exportItem] }));
+            this.menuGroups.set('file-menu', new MenuGroup({ displayName: localization.translate ('File'), children: [saveItem, loadItem, exportItem] }));
         }
 
         return this.menuGroups.get('file-menu')!;
@@ -71,5 +85,9 @@ export class AppMenu implements Module {
         }
 
         return this.menuGroups.get('help-menu')!;
+    }
+    onLanguageChange(): void {
+        this.createMenuBar();
+        console.log("Language has changed");
     }
 }

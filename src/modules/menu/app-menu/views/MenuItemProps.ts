@@ -6,4 +6,6 @@ export type MenuItemProps = {
     displayName: string;
     // the function to be invoked when the user clicks the menu
     onclick: VoidFunction;
+    // specifies whether or not the menu item is disabled
+    disabled?: boolean;
 };

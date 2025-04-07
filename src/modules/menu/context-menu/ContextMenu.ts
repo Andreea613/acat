@@ -5,7 +5,7 @@ import { PlayButton } from './buttons/PlayButton.ts';
 import { PauseButton } from './buttons/PauseButton.ts';
 import { RefreshButton } from './buttons/RefreshButton.ts';
 import { removeAllChildren } from '../../../helpers/dom.ts';
-
+import { ThemeButton } from './buttons/ThemeButton.ts';
 /**
  * The context menu module that handles updating the context items when a automata component is selected
  */
@@ -24,6 +24,7 @@ export class ContextMenu implements Module {
                     new PlayButton(() => console.log('Play button clicked')),
                     new PauseButton(() => console.log('Pause button clicked')),
                     new RefreshButton(() => console.log('Refresh button clicked')),
+                    new ThemeButton(),
                 ],
             }),
         );

@@ -28,4 +28,14 @@ export interface Application {
      * Starts the simulation for the given automata
      */
     simulateAutomata(automata: Automata): void;
+
+    /**
+     * Returns access to the current simulation
+     */
+    getRunningAutomata(): Automata | null;
+
+    /**
+     * Saves the current simulation state to local storage.
+     */
+    saveSimulation() : void;
 }

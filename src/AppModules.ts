@@ -3,6 +3,9 @@ import { ContextMenu } from './modules/menu/context-menu/ContextMenu.ts';
 import { HamburgerMenu } from './modules/menu/hamburger-menu/HamburgerMenu.ts';
 import { AppLogo } from './modules/menu/app-logo/AppLogo.ts';
 import { DFASimulation } from './modules/automata/finite-automata/DFASimulation.ts';
+import { Theme } from './modules/theme/theme.ts';
+import { OptimizingInaccessibleStatesSimulation } from './modules/automata/finite-automata/dfa/InaccessibleStates/OptimizingInaccessibleStatesSimulation.ts'; // Importăm noua simulare
+import { SystemInteraction } from './modules/system-interaction/SystemInteraction.ts';
 import { Localization } from './modules/localization/views/Localization.ts';
 
 /**
@@ -14,6 +17,9 @@ export const ModuleNames = {
     AppLogo: 'app-logo',
     ContextMenu: 'context-menu',
     DeterministicFiniteAutomata: 'automata-dfa',
+    Theme: 'theme-button',
+    OptimizingInaccessibleStatesSimulation: 'optimized-inaccessible-dfa',
+    SystemInteraction: 'system-interaction',
     Localization: 'localization',
 } as const;
 
@@ -27,6 +33,10 @@ export const AppModules = {
     [ModuleNames.AppMenu]: AppMenu,
     [ModuleNames.ContextMenu]: ContextMenu,
     [ModuleNames.DeterministicFiniteAutomata]: DFASimulation,
+    [ModuleNames.Theme]: Theme,
+    [ModuleNames.OptimizingInaccessibleStatesSimulation]: OptimizingInaccessibleStatesSimulation, // Adăugăm noua simulare
+    [ModuleNames.SystemInteraction]: SystemInteraction,
+
 } as const;
 
 /**

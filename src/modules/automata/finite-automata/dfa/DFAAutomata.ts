@@ -4,9 +4,10 @@ import { DefaultToolbar } from '../../../menu/context-menu/DefaultToolbar.ts';
 import { PlayButton } from '../../../menu/context-menu/buttons/PlayButton.ts';
 import { PauseButton } from '../../../menu/context-menu/buttons/PauseButton.ts';
 import { RefreshButton } from '../../../menu/context-menu/buttons/RefreshButton.ts';
+import { PlayStepByStepButton } from '../../../menu/context-menu/buttons/PlayStepByStepButton.ts';
 import { DFASimulator } from './DFASimulator.ts';
 import { DFAMainView } from './views/DFAMainView.ts';
-
+import { ThemeButton } from '../../../menu/context-menu/buttons/ThemeButton.ts';
 /**
  * The DFA automata implementation which acts as a gateway between the simulator and the application
  * It handles returning the current configuration, updating the application context bar
@@ -26,8 +27,14 @@ export class DFAAutomata implements Automata {
      * The constructor for the Deterministic Finite Automata
      */
     constructor() {
+        // creating the context menu toolbar for the DFA simulation
         this.toolbar = new DefaultToolbar({
-            buttons: [new PlayButton(this.simulator.onPlaySimulation), new PauseButton(this.simulator.onPauseSimulation), new RefreshButton(this.onRefreshSimulation)],
+            buttons: [
+                new PlayButton(this.simulator.onPlaySimulation),
+                new PauseButton(this.simulator.onPauseSimulation),
+                new PlayStepByStepButton(this.simulator.onPlayStepByStepSimulation),
+                new RefreshButton(this.onRefreshSimulation),
+            ],
         });
     }
 
@@ -35,7 +42,9 @@ export class DFAAutomata implements Automata {
      * Returning the current configuration for the user to later save it
      */
     getConfiguration(): Record<string, any> {
-        return {};
+        const model = this.simulator.getCurrentModel();
+        const { symbols, transitions, states } = model;
+        return { symbols, transitions, states };
     }
 
     /**

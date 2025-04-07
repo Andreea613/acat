@@ -1,86 +1,142 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-// declaring global colors in this section, who knows... maybe we'll make it themable
 :root {
-    // colors
     --body-background: #fff;
-    --hover-buttons: #eee;
-
-    // shadows
+    --nav-background: #fff;
+    --hover-buttons: #ddd;
+    --selected-button: #eee;
+    --font-color: #000;
     --menu-shadow: 0 8px 11px -6px rgba(0, 0, 0, 0.12);
     --drawer-shadow: 4px 8px 8px 0 rgba(0, 0, 0, 0.12);
-
-    // borders
     --sepparator: solid 1px #ddd;
-
-    // actions
     --active-opacity: .6;
-
-    // the body font size
     --body-font: normal 400 14px "Roboto", sans-serif;
     --category-font: normal 600 16px "Roboto", sans-serif;
+    --input-background: #fff;
+    --textarea-background: #fff;
+    --text-color: #000;
+}
+
+:root[data-theme="dark"] {
+    --body-background: #515151;
+    --nav-background: #3C3C3C;
+    --hover-buttons: gray;
+    --selected-button: #999;
+    --font-color: #fff;
+    --menu-shadow: 0 8px 11px -6px rgba(0, 0, 0, 0.3);
+    --drawer-shadow: 4px 8px 8px 0 rgba(0, 0, 0, 0.2);
+    --sepparator: solid 1px #000;
+    --active-opacity: .6;
+    --body-font: normal 400 14px "Roboto", sans-serif;
+    --category-font: normal 600 16px "Roboto", sans-serif;
+    --input-background: #777777;
+    --textarea-background: #777777;
+    --text-color: #fff;
 }
 
 html {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
+    color: var(--text-color);
 }
 
 body {
-  font: var(--body-font);
-  margin: 0;
-  padding: 0;
-
-  // body dimensions
-  width: 100%;
-  height: 100%;
-
-  // making all custom elements inside body as display flex
-  *:defined:not(style):not(link):not(script):not(:where(div, span, p, hr)) {
-    display: flex;
-    box-sizing: border-box;
-  }
-
-  div {
-    box-sizing: border-box;
-  }
-
-  app-layout {
+    font: var(--body-font);
+    margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    .top-navigation {
-      display: flex;
-      align-items: center;
-      column-gap: 5px;
-      background: var(--body-background);
-      box-shadow: var(--menu-shadow);
-
-      .top-menu {
+    background-color: var(--body-background);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    
+    *:defined:not(style):not(link):not(script):not(:where(div, span, p, hr)) {
         display: flex;
-        flex: 1;
-        align-items: center;
+        box-sizing: border-box;
+    }
 
-        .top-app-menu {
-          display: flex;
-          flex: 1;
+    div {
+        box-sizing: border-box;
+    }
+
+    app-layout {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        
+        .top-navigation {
+            display: flex;
+            align-items: center;
+            column-gap: 5px;
+            background: var(--body-background);
+            box-shadow: var(--menu-shadow);
+            
+            .top-menu {
+                display: flex;
+                flex: 1;
+                align-items: center;
+                
+                .top-app-menu {
+                    display: flex;
+                    flex: 1;
+                }
+
+                .top-ctx-menu {
+                    display: flex;
+                    padding-right: 20px;
+                }
+            }
         }
 
-        .top-ctx-menu {
-          display: flex;
-          padding-right: 20px;
+        .app-body {
+            position: relative;
+            display: flex;
+            flex: 1;
         }
+    }
+
+    textarea, input {
+        background-color: var(--textarea-background) ;
+        color: var(--text-color) ;
+        border: 1px solid black ;
+    }
+}
+
+div.vis-manipulation {
+    background-color: var(--textarea-background);
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;  /* Prevent any interactions with disabled items */
+}
+
+theme-button {
+    cursor: pointer;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    left: 5px;
+    right: 10px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: var(--hover-buttons);
       }
-    }
-
-    .app-body {
-      // relative position for absolute elements
-      position: relative;
-      display: flex;
-      flex: 1;
-    }
-  }
+  
+      &:active {
+        opacity: var(--active-opacity);
+      }
+  
+      &.selected {
+        background: var(--hover-buttons);
+      }
 }

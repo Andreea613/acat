@@ -39,6 +39,20 @@ export class DFAMainView extends CustomElement {
     }
 
     /**
+ * Adds a button to allow step-by-step simulation
+ */
+    addStepButton(callback: () => void) {
+        const button = document.createElement('button');
+        button.innerText = 'Next Step';
+        button.addEventListener('click', callback);
+        button.classList.add('step-button');
+
+        // Adds the button in the right side
+        const rightCol = <RightColumn>this.children[1];
+        rightCol.appendChild(button);
+    }
+
+    /**
      * Shows a message in the log entry
      */
     logMessage(message: string, type: '' | 'error' | 'success' = '') {

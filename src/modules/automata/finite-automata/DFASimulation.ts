@@ -3,7 +3,6 @@ import { Application } from '../../../types/Application.ts';
 import { ModuleNames } from '../../../AppModules.ts';
 import { DrawerItem } from '../../menu/hamburger-menu/views/DrawerItem.ts';
 import { DFAAutomata } from './dfa/DFAAutomata.ts';
-
 /**
  * The deterministic finite automata simulation
  *
@@ -34,7 +33,9 @@ export class DFASimulation extends AbstractFiniteSimulation {
     simulate(): void {
         // hiding the module before proceeding with the automation
         this.app?.getModule(ModuleNames.HamburgerMenu)?.onToggleMenu();
+        // enable the "Save" button
+        this.app?.getModule(ModuleNames.AppMenu)?.getFileMenuGroup()?.getMenuItemByName('Save')?.setEnabled(true);
         // calling the simulation on application instance
         this.app?.simulateAutomata(new DFAAutomata());
-    }
+    }  
 }

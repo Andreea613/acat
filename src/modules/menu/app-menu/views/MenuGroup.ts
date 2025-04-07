@@ -1,6 +1,7 @@
 import { CustomElement } from '../../../../core/CustomElement.ts';
 import { html } from '../../../../helpers/dom.ts';
 import { MenuGroupProps } from './MenuGroupProps.ts';
+import { MenuItem } from './MenuItem.ts';
 
 /**
  * Handles rendering a menu group like: File -> Open, Save, Export etc.
@@ -28,6 +29,22 @@ export class MenuGroup extends CustomElement<MenuGroupProps> {
     template(): string {
         return html`${this.props.displayName}
             <div class="dropdown"></div>`;
+    }
+
+    /**
+     * Returns a MenuItem found inside this group identified by the given name
+     */
+    getMenuItemByName(name: string): MenuItem | null {
+        const drpDwn = this.querySelector('.dropdown')!;
+
+        for (let i = 0, len = drpDwn.children.length; i < len; i++) {
+            const item = <MenuItem>drpDwn.children[i];
+            if (item.hasName(name)) {
+                return item;
+            }
+        }
+
+        return null;
     }
 
     /**
